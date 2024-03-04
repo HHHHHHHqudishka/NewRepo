@@ -7,5 +7,5 @@ int main()
     cin >> rebr;
     cout << "Введите количество вершин: \n";
     cin >> versh;
-    std::cout << "Hello World!\n";
-}loxi
+    std::cout << "Hello Worladawdad!\n";
+}
