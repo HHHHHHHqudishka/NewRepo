@@ -8,4 +8,4 @@ int main()
     cout << "Введите количество вершин: \n";
     cin >> versh;
     std::cout << "Hello World!\n";
-}
+}loxi
