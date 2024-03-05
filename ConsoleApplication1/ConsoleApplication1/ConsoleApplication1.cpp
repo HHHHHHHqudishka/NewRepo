@@ -74,6 +74,25 @@ int main()
     }
 
     printMatrix(matrix, a);
+
+    int NullCntr = 0;
+    for (int i = 0; i < a; i++)
+    {
+        for (int j = 0; j < a; j++)
+        {
+            if (matrix[i][j] == 0)
+            {
+                NullCntr++;
+            }
+        }
+        if (NullCntr == a)
+        {
+            cout << "точка " << i + 1 << " тупик" << endl;
+        }
+        NullCntr = 0;
+    }
+
+    
   
 
 
