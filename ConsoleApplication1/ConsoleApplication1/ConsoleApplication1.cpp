@@ -14,6 +14,37 @@ void printMatrix(int** matrix, int a) {
 
 }
 
+int** copyMatrix(int** originalMatrix, int rows, int cols) {
+    // Выделение памяти для нового массива
+    int** copiedMatrix = new int* [rows];
+    for (int i = 0; i < rows; i++) {
+        copiedMatrix[i] = new int[cols];
+    }
+
+    // Копирование элементов из оригинального массива в новый
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            copiedMatrix[i][j] = originalMatrix[i][j];
+        }
+    }
+
+    return copiedMatrix;
+}
+
+void AtpFound(int** matrix, int i, int a)
+{
+    for (int j = 0; j < a; j++)
+    {
+        if (matrix[i][j] == 1)
+        {
+            matrix[i][j] = 0;
+            i = j;
+            AtpFound(matrix, i, a);
+
+        }
+    }
+}
+
 int main()
 {
     setlocale(LC_ALL,"ru");
@@ -92,8 +123,17 @@ int main()
         NullCntr = 0;
     }
 
-    
+    int** CopMtr = copyMatrix(matrix, a, a);
+
+    for (int i = 0; i < a; i++)
+    {
+        AtpFound(CopMtr, i, a);
+        printMatrix(CopMtr, a);
+        cout << endl;
+    }
+   
   
+    printMatrix(matrix, a);
 
 
 }
