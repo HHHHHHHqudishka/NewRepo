@@ -37,11 +37,11 @@ void AtpFound(int** matrix, int i, int a)
     {
         if (matrix[i][j] == 1)
         {
-            matrix[i][j] = 0;
-            i = j;
-            AtpFound(matrix, i, a);
+            matrix[i][j] = -1;
+            AtpFound(matrix, j, a);
 
         }
+        matrix[i][j] = -1;
     }
 }
 
@@ -123,17 +123,28 @@ int main()
         NullCntr = 0;
     }
 
-    int** CopMtr = copyMatrix(matrix, a, a);
-
     for (int i = 0; i < a; i++)
     {
+        int** CopMtr = copyMatrix(matrix, a, a);
         AtpFound(CopMtr, i, a);
-        printMatrix(CopMtr, a);
+        //printMatrix(CopMtr, a);
         cout << endl;
+        int PointCounter = 0;
+        for (int point = 0; point < a; point++)
+        {
+            if (CopMtr[point][1] == -1)
+            {
+                PointCounter++;
+            }
+        }
+        if (PointCounter == a)
+        {
+            cout << "Точка" << i + 1 << " антитупик" << endl;
+        }
     }
-   
-  
-    printMatrix(matrix, a);
+    
+    
+    
 
 
 }
