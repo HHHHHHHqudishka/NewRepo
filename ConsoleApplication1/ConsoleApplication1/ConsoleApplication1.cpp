@@ -1,17 +1,18 @@
 ﻿#include <iostream>
 #include <iomanip>
-
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-void printMatrix(int** matrix, int a) {
 
+void printMatrix(int** matrix, int a) {
+    int k = 0;
     for (int i = 0; i < a; i++) {
         for (int j = 0; j < a; j++) {
-            cout << setw(5) << matrix[i][j] << " ";
+            cout << setw(2) << matrix[i][j] << " ";
         }
         cout << endl;
     }
-
 }
 
 int main()
@@ -92,7 +93,34 @@ int main()
         NullCntr = 0;
     }
 
-    
+
+    int printMatrix(int& matrix) {
+        ;
+
+    }
+    vector<vector<int>> vectorOfArrays;
+    for (int i = 0; i < a; i++) {
+        for (int j = 0; j < a; j++) {
+            if (matrix[i][j] == 1) {
+                for (int l = 0; l < a; l++) {
+                    if (matrix[j][l] == 1){
+                        
+
+                }
+                
+            }
+        }
+    }
+
+    // Создаем и добавляем несколько массивов в вектор
+    std::vector<int> array1 = { 1, 2, 3 };
+    std::vector<int> array2 = { 4, 5, 6 };
+    std::vector<int> array3 = { 7, 8, 9 };
+
+    vectorOfArrays.push_back(array1);
+    vectorOfArrays.push_back(array2);
+    vectorOfArrays.push_back(array3);
+
   
 
 
