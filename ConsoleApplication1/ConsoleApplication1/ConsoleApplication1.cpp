@@ -111,7 +111,6 @@ int main()
     {
         int** copiedMatrix = CopyMatrix(matrix, points);
         AtpFound(copiedMatrix, i, points);
-        PrintMatrix(copiedMatrix, points);
         int PointCounter = 0;
         for (int point = 0; point < points; point++)
         {
