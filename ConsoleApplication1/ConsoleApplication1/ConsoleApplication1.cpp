@@ -3,31 +3,33 @@
 
 using namespace std;
 
-void printMatrix(int** matrix, int a) {
-
+void PrintMatrix(int** matrix, int a) {
+    cout << endl;
     for (int i = 0; i < a; i++) {
         for (int j = 0; j < a; j++) {
             cout << setw(5) << matrix[i][j] << " ";
         }
         cout << endl;
     }
+    cout << endl;
 
 }
 
-int** copyMatrix(int** originalMatrix, int rows, int cols) {
-    // Выделение памяти для нового массива
-    int** copiedMatrix = new int* [rows];
-    for (int i = 0; i < rows; i++) {
-        copiedMatrix[i] = new int[cols];
+void DelMatrix(int** matrix, int n) {
+    for (int i = 0; i < n; i++) {
+        delete[] matrix[i];
     }
+    delete[] matrix;
+}
 
-    // Копирование элементов из оригинального массива в новый
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+int** CopyMatrix(int** originalMatrix, int n) {
+    int** copiedMatrix = new int* [n];
+    for (int i = 0; i < n; i++) {
+        copiedMatrix[i] = new int[n];
+        for (int j = 0; j < n; j++) {
             copiedMatrix[i][j] = originalMatrix[i][j];
         }
     }
-
     return copiedMatrix;
 }
 
@@ -39,7 +41,6 @@ void AtpFound(int** matrix, int i, int a)
         {
             matrix[i][j] = -1;
             AtpFound(matrix, j, a);
-
         }
         matrix[i][j] = -1;
     }
@@ -48,100 +49,84 @@ void AtpFound(int** matrix, int i, int a)
 int main()
 {
     setlocale(LC_ALL,"ru");
-    int a, b;
+    int points, edges;
     srand(time(NULL));
     cout << "Введите кол-во вершин: ";
-    cin >> a;
-
+    cin >> points;
     cout << "Введите кол-во рёбер: ";
-    cin >> b;
+    cin >> edges;
 
-    int** matrix = new int* [a];
+    int** matrix = new int* [points];
     int counter = 0;
-    for (int i = 0; i < a; i++) {
-        matrix[i] = new int[a];
-        for (int j = 0; j < a; j++) {
-            matrix[i][j] = -1;
-            if (i == j) {
-                matrix[i][j] = 0;
-            }
+    for (int i = 0; i < points; i++) {
+        matrix[i] = new int[points];
+        for (int j = 0; j < points; j++) {
+            matrix[i][j] = 0;
             if (j > i) {
                 counter++;
             }
         }
     }
 
-    if (b > counter) {
+    if (edges > counter) {
         cout << "Слишком много рёбер.";
         exit(0);
     }
 
-    while (b > 0) {
-        for (int i = 0; i < a; i++) {
-            for (int j = 0; j < a; j++) {
-                if (j > i && matrix[i][j] == -1 && rand() % 3 == 1) {
-                    b--;
-                    if (b < 0) {
-                        break;
-                    }
-                    matrix[i][j] = 1;
-                    if (rand() % 5 == 1) {
-                        matrix[j][i] = 1;
-                    }
-                    else {
-                        matrix[j][i] = 0;
-                    }
-                }
-            }
-        }
-    }
-       
-    for (int i = 0; i < a; i++) {
-        for (int j = 0; j < a; j++) {
-            if (matrix[i][j] == -1) {
-                matrix[i][j] = 0;
-            }
-        }
-    }
-
-    printMatrix(matrix, a);
-
-    int NullCntr = 0;
-    for (int i = 0; i < a; i++)
+    while (edges > 0)
     {
-        for (int j = 0; j < a; j++)
+        int i = rand() % (points - 1);
+        int j = rand() % (points - i - 1) + i + 1;
+        if (matrix[i][j] == 0)
+        {
+            edges--;
+            matrix[i][j] = 1;
+            if (rand() % 5 == 0)
+            {
+                matrix[j][i] = 1;
+            }
+        }
+    }
+
+    PrintMatrix(matrix, points);
+
+    int nullCntr = 0;
+    for (int i = 0; i < points; i++)
+    {
+        for (int j = 0; j < points; j++)
         {
             if (matrix[i][j] == 0)
             {
-                NullCntr++;
+                nullCntr++;
             }
         }
-        if (NullCntr == a)
+        if (nullCntr == points)
         {
             cout << "точка " << i + 1 << " тупик" << endl;
         }
-        NullCntr = 0;
+        nullCntr = 0;
     }
 
-    for (int i = 0; i < a; i++)
+    for (int i = 0; i < points; i++)
     {
-        int** CopMtr = copyMatrix(matrix, a, a);
-        AtpFound(CopMtr, i, a);
-        //printMatrix(CopMtr, a);
-        cout << endl;
+        int** copiedMatrix = CopyMatrix(matrix, points);
+        AtpFound(copiedMatrix, i, points);
+        PrintMatrix(copiedMatrix, points);
         int PointCounter = 0;
-        for (int point = 0; point < a; point++)
+        for (int point = 0; point < points; point++)
         {
-            if (CopMtr[point][1] == -1)
+            if (copiedMatrix[point][1] == -1)
             {
                 PointCounter++;
             }
         }
-        if (PointCounter == a)
+        if (PointCounter == points)
         {
-            cout << "Точка" << i + 1 << " антитупик" << endl;
+            cout << "Точка " << i + 1 << " антитупик" << endl;
         }
+        DelMatrix(copiedMatrix, points);
     }
+    DelMatrix(matrix, points);
     
     
     
