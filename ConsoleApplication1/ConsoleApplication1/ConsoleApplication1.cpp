@@ -102,7 +102,7 @@ int main()
         }
         if (nullCntr == points)
         {
-            cout << "точка " << i + 1 << " тупик" << endl;
+            cout << "Точка " << i + 1 << " тупик" << endl;
         }
         nullCntr = 0;
     }
